@@ -13,6 +13,7 @@ public class MemoryGame {
 		this.mainframe = new JFrame("Memeory Game");
 		this.mainframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.mainframe.setSize(400,500);
+		this.mainContentPane = this.mainfram.getcontentpane();
 		
 		
 	}
