@@ -9,13 +9,13 @@ public class Card extends JLabel implements MouseListener{
 	Icon faceicon;
 	Icon backicon;
 	boolean faceup = false;
-	
+	cardController controller;
 	int num;
 	int iconWidthHalf, iconHeightHalf;
 	boolean mousePressedOnMe = false;
 	
 	
-	public Card(Icon face, Icon back,int num){
+	public Card(cardController controller,Icon face, Icon back,int num){
 		super(back);
 		this.faceicon= face;
 		this.backicon= back;
@@ -24,6 +24,7 @@ public class Card extends JLabel implements MouseListener{
 		this.addMouseListener(this);
 		this.iconHeightHalf = back.getIconHeight()/2;
 		this.iconWidthHalf= face.getIconWidth()/2;
+		this.controller = controller;
 		
 	}
 	
@@ -52,11 +53,12 @@ public class Card extends JLabel implements MouseListener{
 		
 	}
 
-	private void flipUp() {
+	public void flipUp() {
 		if (this.faceup){
 			return;
 		}
-		
+		this.faceup = true;
+		this.faceup = this.controller.checkForTwo(this);
 		if (this.faceup){
 			this.setIcon(faceicon); // flips the card up
 			
@@ -64,7 +66,7 @@ public class Card extends JLabel implements MouseListener{
 		
 	}
 	
-	private void flipDown(){
+	public void flipDown(){
 		if (!this.faceup){
 			return;
 			}
