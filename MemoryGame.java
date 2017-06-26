@@ -61,59 +61,7 @@ public class MemoryGame implements ActionListener{
 
 	}
 	
-	public class StopWatchPane extends JPanel {
-
-        private JLabel label;
-        private long lastTickTime;
-        private Timer timer;
-
-        public StopWatchPane() {
-            setLayout(new GridBagLayout());
-            label = new JLabel(String.format("%04d:%02d:%02d.%03d", 0, 0, 0, 0));
-
-            timer = new Timer(100, new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    long runningTime = System.currentTimeMillis() - lastTickTime;
-                    Duration duration = Duration.ofMillis(runningTime);
-                    long hours = duration.toHours();
-                    duration = duration.minusHours(hours);
-                    long minutes = duration.toMinutes();
-                    duration = duration.minusMinutes(minutes);
-                    long millis = duration.toMillis();
-                    long seconds = millis / 1000;
-                    millis -= (seconds * 1000);
-                    label.setText(String.format("%04d:%02d:%02d.%03d", hours, minutes, seconds, millis));
-                }
-            });
-
-            GridBagConstraints gbc = new GridBagConstraints();
-            gbc.gridx = 0;
-            gbc.gridy = 0;
-            gbc.weightx = 1;
-            gbc.gridwidth = GridBagConstraints.REMAINDER;
-            gbc.insets = new Insets(4, 4, 4, 4);
-            add(label, gbc);
-            lastTickTime = System.currentTimeMillis();
-            timer.start();
-            JButton stop = new JButton("Stop");
-            stop.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    timer.stop();
-                }
-            });
-
-            gbc.gridx = 0;
-            gbc.gridy++;
-            gbc.weightx = 0;
-            gbc.gridwidth = 1;
-          //  add(start, gbc);
-            gbc.gridx++;
-            //add(stop, gbc);
-        }
-
-    }
+	
 
 	private Image getScaledImage(Image srcImg, int w, int h){
 	    BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
@@ -196,7 +144,7 @@ public class MemoryGame implements ActionListener{
 		this.mainContentPane.removeAll();
 		//creating a new Game
 		this.mainContentPane.add(makeCards(num,size));
-		this.mainContentPane.add(new StopWatchPane());
+		startTime = System.currentTimeMillis();
 		// showing the main window
 
 		this.mainframe.setVisible(true);
@@ -281,6 +229,8 @@ public class MemoryGame implements ActionListener{
 				}
 			}
 			if (count == 0){
+				long estimatedTime = System.currentTimeMillis() - startTime;
+            	System.out.print("ET:  " + estimatedTime);
 				return true;
 			}else{
 				return false;
