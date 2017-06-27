@@ -230,7 +230,18 @@ public class MemoryGame implements ActionListener{
 			}
 			if (count == 0){
 				long estimatedTime = System.currentTimeMillis() - startTime;
-            	System.out.print("ET:  " + estimatedTime);
+				double finalpoints = 0;
+            	System.out.print("Time to Finish: " + estimatedTime);
+            	if(estimatedTime < 30000){
+            		finalPoints = 1000 * estimatedTime/0.8;
+            	} else if(estimatedTime < 45000){
+            		finalPoints = 800 * estimatedTime/0.5;
+            	} else if(estimatedTime < 100000){
+            		finalPoints = 600 * estimatedTime/0.2;
+            	} else{
+            		finalPoints = 0;
+            	}
+            	System.out.print("Final Score: " + finalPoints);
 				return true;
 			}else{
 				return false;
